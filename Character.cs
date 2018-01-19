@@ -5,11 +5,7 @@ using UnityEngine.UI;
 
 public class Character : MonoBehaviour {
 	public GameController gameController;
-	private GameObject startButton;
-
-	void Start(){
-		startButton = GameObject.Find ("StartButton");
-	}
+	public GameObject gameOverPanel;
 
 	void OnTriggerEnter2D(Collider2D col){
 		if(col.transform.tag == this.gameObject.tag && gameController.isStart){
@@ -17,9 +13,9 @@ public class Character : MonoBehaviour {
 			Destroy (col.gameObject);
 		}
 		else{
-			gameController.score = 0;
+			gameController.setHighScore ();
 			gameController.isStart = false;
-			startButton.SetActive (true);
+			gameOverPanel.SetActive (true);
 		}
 	}
 }

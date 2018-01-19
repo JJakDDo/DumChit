@@ -10,15 +10,18 @@ public class GameController : MonoBehaviour {
 	public float PoseInterval = 2.0f;
 	public int score = 0;
 	public Text scoreText;
+	public Text highScoreText;
 	private string[] pose = { "Pose1", "Pose2", "Pose3", "Pose4" };
 	public int poseNum;
 	public int maxPose = 4;
 	private int randomPose;
+	private int highScore = 0;
 	public bool isStart = false;
 
 	void Start(){
 		StartCoroutine ("CreateCharacter");
 		poseNum = 0;
+		getHightScore ();
 	}
 
 	void Update(){
@@ -62,5 +65,23 @@ public class GameController : MonoBehaviour {
 				poseNum = maxPose - 1;
 			PoseChecker.tag = pose[poseNum];
 		}
+	}
+
+	public void getHightScore(){
+		string key = "HighScore";
+		highScore = PlayerPrefs.GetInt (key, 0);
+	}
+
+	public void setHighScore(){
+		string key = "HighScore";
+		if(score > highScore){
+			PlayerPrefs.SetInt (key, score);
+			highScore = score;
+		}
+		highScoreText.text = "HighScore: " + highScore;
+	}
+
+	public void exitGame(){
+		Application.Quit ();
 	}
 }
